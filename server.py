@@ -44,7 +44,7 @@ ALLOWED_ACTIONS = {
 }
 
 class Handler(SimpleHTTPRequestHandler):
-    server_version = 'CLStudio/0.1'
+    server_version = 'CLStudio/0.2'
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(BASE / 'app'), **kwargs)
 
