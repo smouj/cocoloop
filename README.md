@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="branding/cocoloop-logo-color.png" alt="CocoLoop" width="150">
+<img src="app/assets/cocoloop-color-512.png" alt="CocoLoop" width="150">
 
 # CocoLoop · CL Studio
 
@@ -119,7 +119,7 @@ The MCP server exposes `cl_get_project` and `cl_apply_actions`. Read first, then
 
 | Agent workspace | Brand |
 |---|---|
-| ![Agents](docs/screenshots/agents.png) | ![CocoLoop logo](branding/cocoloop-logo-color.png) |
+| ![Agents](docs/screenshots/agents.png) | ![CocoLoop logo](app/assets/cocoloop-color-512.png) |
 
 ## Architecture
 

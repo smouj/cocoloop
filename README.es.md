@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="branding/cocoloop-logo-color.png" alt="CocoLoop" width="150">
+<img src="app/assets/cocoloop-color-512.png" alt="CocoLoop" width="150">
 
 # CocoLoop · CL Studio
 
