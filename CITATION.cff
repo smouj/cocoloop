@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "CocoLoop · CL Studio"
+message: "If you use CL Studio in research or teaching, cite this repository."
+type: software
+authors:
+  - name: "SMOUJ"
+    alias: smouj
+    website: "https://github.com/smouj"
+repository-code: "https://github.com/smouj/cocoloop"
+url: "https://smouj.github.io/cocoloop/"
+license: MIT
+version: "0.2.0"
+date-released: "2026-11-09"
+keywords:
+  - digital audio workstation
+  - web audio
+  - music sequencer
+  - agent tools
+  - local-first

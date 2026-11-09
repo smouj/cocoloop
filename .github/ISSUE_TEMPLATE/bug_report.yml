@@ -1,0 +1,60 @@
+name: Bug report
+description: Report a reproducible problem in CL Studio
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please do not include private project files, tokens or personal data.
+        Security issues go through the private advisory flow described in SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Release tag or commit shown in the sidebar.
+      placeholder: v0.2.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows 10, Windows 11, Linux, macOS, Other]
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 141, Firefox 144, Edge 141
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact clicks, keys, agent actions or project file.
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include console errors if any.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, audio device, project size, whether the local bridge was running.

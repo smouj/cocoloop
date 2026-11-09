@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b1019">
+  <title>CL Studio — CocoLoop</title>
+  <link rel="icon" href="assets/cocoloop-color-64.png" type="image/png">
+  <link rel="shortcut icon" href="assets/cocoloop.ico">
+  <link rel="apple-touch-icon" href="assets/cocoloop-color-256.png">
+  <meta name="description" content="CocoLoop (CL Studio): estudio musical de código abierto con secuenciador, mezclador e integración de agentes IA.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CocoLoop — CL Studio">
+  <meta property="og:description" content="Local-first, open-source DAW with agent-native editing. Web Audio, MIDI and WAV export, MCP bridge.">
+  <meta property="og:image" content="assets/cocoloop-color-512.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"><img src="assets/cocoloop-color-64.png" alt="Logotipo de CocoLoop"></span><span class="brand-word">CL <b>STUDIO</b><small>COCOLOOP</small></span></div>
+    <div class="side-top">
+      <div class="nav-caption">WORKSPACE</div>
+      <button class="nav-link selected" data-view="studio"><span data-icon="layout"></span><span>Studio</span><span class="nav-shortcut">01</span></button>
+      <button class="nav-link" data-view="piano"><span data-icon="piano"></span><span>Piano Roll</span><span class="nav-shortcut">02</span></button>
+      <button class="nav-link" data-view="mixer"><span data-icon="sliders"></span><span>Mixer</span><span class="nav-shortcut">03</span></button>
+      <button class="nav-link" data-view="agents"><span data-icon="sparkles"></span><span>AI Agents</span><span class="nav-shortcut">04</span></button>
+      <div class="nav-caption secondary-caption">PROJECT</div>
+      <button class="nav-link" id="new-project"><span data-icon="file-plus"></span><span>New project</span></button>
+      <button class="nav-link" id="open-project"><span data-icon="folder-open"></span><span>Open project</span></button>
+      <button class="nav-link" id="save-project"><span data-icon="save"></span><span>Save project</span></button>
+      <button class="nav-link" id="export-wav"><span data-icon="download"></span><span>Export WAV</span></button>
+      <button class="nav-link" id="export-midi"><span data-icon="music"></span><span>Export MIDI</span></button>
+    </div>
+    <div class="sidebar-footer">
+      <div class="tiny-heading">AUDIO ENGINE</div>
+      <div class="engine-status"><span class="live-dot"></span><span>Web Audio / Local</span><span class="mono">44.1k</span></div>
+      <div class="master-meter" id="master-meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="engine-bottom"><span>MASTER OUTPUT</span><span id="engine-db">-∞ dB</span></div>
+      <div class="version">CL STUDIO <span>v0.2.0 / ALPHA</span></div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="toolbar">
+      <div class="project-identity"><span class="project-breadcrumb">PROJECT /</span><input id="project-title" aria-label="Nombre del proyecto" value="Untitled session" maxlength="120"><span class="project-status"><span></span> Local project</span></div>
+      <div class="toolbar-actions"><button class="icon-button" id="undo" title="Deshacer (Ctrl+Z)" aria-label="Deshacer"><span data-icon="undo"></span></button><button class="icon-button" id="redo" title="Rehacer (Ctrl+Mayús+Z)" aria-label="Rehacer"><span data-icon="redo"></span></button><div class="toolbar-divider"></div><span class="local-chip"><span data-icon="shield"></span> OFFLINE FIRST</span></div>
+    </header>
+    <div class="transport">
+      <div class="transport-left"><span class="clock-icon" data-icon="activity"></span><span class="transport-title">SEQUENCER</span><span class="transport-subtitle" id="transport-mode">Arrangement mode</span></div>
+      <div class="transport-middle"><button class="stop-button" id="stop" title="Detener" aria-label="Detener"><span data-icon="square"></span></button><button class="play-button" id="play" title="Reproducir / detener (Espacio)"><span data-icon="play" id="play-icon"></span></button><div class="bpm-box"><span>BPM</span><input id="bpm" type="number" min="40" max="260" value="140" aria-label="Tempo BPM"></div><div class="transport-timing"><span class="time-numbers" id="bar-indicator">01 : 01 : 01</span><span class="time-signature">4 / 4</span></div><button id="loop-toggle" class="pill-toggle on" aria-pressed="true"><span data-icon="repeat"></span> LOOP</button><button id="metronome" class="pill-toggle" aria-pressed="false" title="Metronomo (M)"><span data-icon="activity"></span> CLICK</button></div>
+      <div class="transport-right"><div class="control-tags"><span data-icon="waveform"></span><span>CL AUDIO CORE</span></div><button class="top-export" id="top-export"><span data-icon="download"></span> Export <span data-icon="chevron-down"></span></button></div>
+    </div>
+
+    <div class="content-scroller" id="scroll-area">
+      <div class="overview" id="overview">
+        <div class="heading-text"><div class="eyebrow">YOUR CREATIVE WORKSPACE <span class="eyebrow-divider">/</span> <span id="project-style">TRAP SESSION</span></div><h1>Make something <em>unreal.</em></h1><p>Compose freely. Build with agents. Own every sound.</p></div>
+        <div class="quick-stats"><div><b id="stat-tracks">07</b><span>TRACKS</span></div><div><b id="stat-bars">08</b><span>BARS</span></div><div><b id="stat-notes">000</b><span>MIDI NOTES</span></div></div>
+      </div>
+      <section class="panel timeline-panel" id="timeline-panel">
+        <div class="panel-header"><div class="panel-title"><span class="panel-icon" data-icon="layout"></span><h2>Arrangement</h2><span class="panel-caption">PLAYLIST / TIMELINE</span></div><div class="panel-actions"><button class="minimal-action" id="add-bar"><span data-icon="plus"></span> Bar</button><button class="minimal-action" id="remove-bar"><span data-icon="minus"></span> Bar</button><span class="panel-separator"></span><span class="kbd-label">CLICK TO PLACE</span></div></div>
+        <div class="arrangement-wrap" id="arrangement-wrap"><div id="arrangement"></div></div>
+        <div class="panel-footnote"><span><i class="foot-dot mint"></i> Pattern clip</span><span><i class="foot-dot blank"></i> Empty bar</span><span id="arrangement-info">8 bars · 4/4</span></div>
+      </section>
+      <section class="panel rack-panel" id="rack-panel"><div class="panel-header"><div class="panel-title"><span class="panel-icon" data-icon="grid"></span><h2>Channel Rack</h2><span class="panel-caption">PATTERN 01 / 16 STEPS</span></div><div class="panel-actions"><button class="minimal-action active-soft" id="random-hats" title="Añade variación a los hats"><span data-icon="shuffle"></span> Humanize hats</button><span class="kbd-label">1 BAR LOOP</span></div></div><div class="rack" id="rack"></div><div class="rack-bottom"><button class="add-channel" id="add-track"><span data-icon="plus"></span> Add instrument / channel</button><span>16 steps <span class="muted-dot">·</span> 4 beats <span class="muted-dot">·</span> 1 pattern</span></div></section>
+      <section class="panel piano-panel" id="piano-panel"><div class="panel-header"><div class="panel-title"><span class="panel-icon" data-icon="piano"></span><h2>Piano Roll</h2><span class="panel-caption" id="piano-track-label">808 / SUB BASS</span></div><div class="panel-actions"><label class="len-label" for="note-length">NOTE LENGTH</label><select id="note-length" aria-label="Duración de nota"><option value="1">1/16</option><option value="2" selected>1/8</option><option value="4">1/4</option><option value="8">1/2</option></select><label class="len-label" for="note-velocity">VELOCITY</label><select id="note-velocity" aria-label="Velocidad de nota"><option value="32">32</option><option value="64">64</option><option value="100" selected>100</option><option value="127">127</option></select><button class="minimal-action" id="clear-notes"><span data-icon="eraser"></span> Clear</button></div></div><div class="piano-content"><div id="piano"></div></div><div class="panel-footnote"><span><i class="foot-dot mint"></i> Click to add note</span><span>Right click to remove</span><span>MIDI pitch / C2—B5</span></div></section>
+      <section class="panel mixer-panel" id="mixer-panel"><div class="panel-header"><div class="panel-title"><span class="panel-icon" data-icon="sliders"></span><h2>Mixing console</h2><span class="panel-caption">LEVELS / ROUTING</span></div><div class="panel-actions"><span class="kbd-label">STEREO OUTPUT</span></div></div><div class="mixer-banks" id="mixer-banks"></div></section>
+      <div class="bottom-note">CL STUDIO <span>—</span> Sound is yours. Creative control is yours. <span>© OPEN SOURCE / MIT</span></div>
+    </div>
+  </main>
+
+  <aside class="inspector">
+    <div class="inspector-head"><span data-icon="sliders"></span> INSPECTOR <span class="inspector-head-right">PANEL 01</span></div>
+    <div class="inspector-scroll"><section class="inspector-section"><div class="section-label">SELECTED CHANNEL</div><div class="selected-track"><span id="track-avatar" class="track-avatar"><span data-icon="music"></span></span><div><strong id="track-name">808 / Sub bass</strong><small id="track-instrument">ANALOG SUB SYNTH</small></div><button id="preview-track" class="ghost-icon" title="Escuchar pista"><span data-icon="volume-2"></span></button></div><div class="track-actions"><button id="mute-track" class="small-switch">MUTE</button><button id="solo-track" class="small-switch">SOLO</button><button id="duplicate-track" class="small-switch">DUPLICATE</button><button id="delete-track" class="small-switch danger">DELETE</button></div></section>
+      <section class="inspector-section"><div class="section-label">CHANNEL CONTROLS</div><div class="range-control"><div><label for="track-volume">Volume</label><output id="volume-output">75%</output></div><input id="track-volume" type="range" min="0" max="100" value="75"></div><div class="range-control"><div><label for="track-pan">Pan</label><output id="pan-output">C</output></div><input id="track-pan" type="range" min="-100" max="100" value="0"></div><div class="range-control"><div><label for="track-cutoff">Low-pass filter</label><output id="cutoff-output">12.0 kHz</output></div><input id="track-cutoff" type="range" min="200" max="18000" step="100" value="12000"></div><div class="range-control"><div><label for="track-delay">Delay send</label><output id="delay-output">0%</output></div><input id="track-delay" type="range" min="0" max="100" value="0"></div></section>
+      <section class="inspector-section" id="sample-section"><div class="section-label">SAMPLE INPUT</div><div class="sample-info" id="sample-info">Drag or load your own audio sample for the Sampler instrument.</div><button class="outline-button" id="upload-sample"><span data-icon="upload"></span> Load sample</button></section>
+      <section class="inspector-section agent-control"><div class="section-label">AGENT ACCESS <span class="agent-label">LOCAL BRIDGE</span></div><div class="agent-banner"><div class="agent-banner-icon"><span data-icon="sparkles"></span></div><div><b>Give your agent the controls.</b><p>Codex / OpenClaw can edit this project with approved musical actions.</p></div></div><label class="toggle-row" for="agent-allowed"><div><strong>Allow agent editing</strong><small>Off by default · Local only</small></div><input type="checkbox" id="agent-allowed" role="switch"></label><div class="bridge-health" id="bridge-health"><i></i> Checking local bridge…</div><button class="outline-button" id="copy-agent-guide"><span data-icon="copy"></span> Copy agent instructions</button></section>
+      <section class="inspector-section"><div class="section-label">ACTIVITY LOG</div><div class="activity" id="activity"><div class="activity-row"><i></i><span>Session initialized</span><time>NOW</time></div></div></section>
+    </div>
+  </aside>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="modal-overlay" class="modal-overlay hidden"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-header"><div><span class="eyebrow">CREATE SOMETHING NEW</span><h2 id="modal-title">Add an instrument</h2></div><button id="modal-close" class="ghost-icon" title="Cerrar"><span data-icon="x"></span></button></div><div class="instrument-picker" id="instrument-picker"></div><div class="modal-footer"><span>Choose a sound to add it to your session</span><button id="modal-cancel" class="outline-button">Cancel</button></div></div></div>
+<input type="file" id="project-input" accept=".json,.als,.cocoloop,application/json" hidden>
+<input type="file" id="sample-input" accept="audio/*,.wav,.mp3,.ogg,.aiff" hidden>
+<script type="module" src="main.js"></script>
+</body>
+</html>

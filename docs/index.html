@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b1019">
+<title>CocoLoop · CL Studio — local-first DAW for humans and agents</title>
+<meta name="description" content="CocoLoop CL Studio is a local-first, open-source browser DAW with Web Audio, MIDI/WAV export and validated agent editing via MCP and CLI.">
+<meta property="og:title" content="CocoLoop · CL Studio">
+<meta property="og:description" content="A browser DAW that agents can actually edit. Local-first, MIT, zero runtime dependencies.">
+<meta property="og:image" content="social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/cocoloop-color-64.png" type="image/png">
+<link rel="shortcut icon" href="assets/cocoloop.ico">
+<style>
+:root{--bg:#0b1019;--panel:#121926;--panel2:#17222e;--line:#26303c;--text:#e7f0f2;--muted:#94a7b4;--mint:#c4ee7c;--mint2:#65dbb7;--blue:#7ca9f4;--orange:#f8ad7c;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--max:1180px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+.wrap{width:min(var(--max),calc(100% - 40px));margin:0 auto}
+header{position:sticky;top:0;z-index:20;background:#0b1019dd;backdrop-filter:blur(14px);border-bottom:1px solid #1e2833}
+.nav{display:flex;align-items:center;gap:26px;height:72px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.4px}
+.brand img{width:38px;height:38px;object-fit:contain}
+.brand small{display:block;font-size:9px;letter-spacing:3px;color:#8aa39f;font-weight:700;margin-top:2px}
+.nav nav{margin-left:auto;display:flex;gap:22px;font-size:13px;color:#98acb8;font-weight:600}
+.nav nav a:hover{color:var(--mint)}
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:9px;padding:13px 19px;font-size:13px;font-weight:800;border:1px solid transparent;transition:.15s}
+.btn.primary{background:var(--mint);color:#10211c;box-shadow:0 0 32px #c4ee7c22}
+.btn.primary:hover{background:#d6ffa0;transform:translateY(-1px)}
+.btn.ghost{border-color:#364752;background:#17222e;color:#cfe2dd}
+.btn.ghost:hover{border-color:#6bbca9}
+.hero{padding:70px 0 46px;display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center;position:relative}
+.hero:before{content:"";position:absolute;inset:-90px -20% auto -20%;height:520px;background:radial-gradient(700px 300px at 55% 20%,#1d4a3d55,transparent 70%);pointer-events:none}
+.eyebrow{font-size:11px;letter-spacing:3.2px;color:var(--mint);font-weight:850}
+h1{font-size:clamp(44px,6vw,82px);line-height:.94;letter-spacing:-3.4px;margin:16px 0 18px;font-weight:850}
+h1 em{font-style:normal;color:var(--mint)}
+.lede{font-size:18px;color:#a9bcc8;max-width:620px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;color:#7f95a2;font-size:12px;font-weight:650;letter-spacing:.4px}
+.meta b{color:#d7e8e3}
+.shot{position:relative;border:1px solid #31404c;border-radius:13px;overflow:hidden;box-shadow:0 40px 90px #0009;transform:rotate(.6deg)}
+.shot img{width:100%}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.chip{border:1px solid #32434e;background:#14202b;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:750;color:#b9d0ca;letter-spacing:.3px}
+.chip.hot{border-color:#4f7a5b;background:#1b3027;color:var(--mint)}
+section{padding:58px 0;border-top:1px solid #1b2530}
+h2{font-size:clamp(28px,3.4vw,42px);letter-spacing:-1.6px;line-height:1.1;margin:0 0 12px}
+.sub{color:#93a8b5;max-width:720px;margin:0 0 30px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:22px}
+.card h3{margin:0 0 8px;font-size:15px}
+.card p{margin:0;color:#93a8b5;font-size:13.5px}
+.ico{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:#1b2f2b;color:var(--mint);margin-bottom:14px;font-size:16px;border:1px solid #2a4740}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
+.code{background:#0c141c;border:1px solid #29343e;border-radius:11px;padding:18px;font:12px/1.65 var(--mono);color:#b7e8d2;overflow:auto;white-space:pre}
+.code .c{color:#6f8894}.code .k{color:var(--mint)}
+ul.checks{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ul.checks li{padding-left:26px;position:relative;color:#a8bcc7;font-size:14px}
+ul.checks li:before{content:"✓";position:absolute;left:0;color:var(--mint);font-weight:900}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gallery figure{margin:0;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--panel)}
+.gallery figcaption{padding:11px 14px;font-size:11px;color:#8ca1ae;letter-spacing:1px;font-weight:750;border-top:1px solid var(--line)}
+footer{border-top:1px solid #1e2833;padding:34px 0 54px;color:#8095a2;font-size:12px}
+.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+.foot a:hover{color:var(--mint)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.nav nav{display:none}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}h1{letter-spacing:-2px}.actions .btn{width:100%;justify-content:center}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="#top"><img src="assets/cocoloop-logo-color.png" alt=""><span>CocoLoop<small>CL STUDIO</small></span></a>
+  <nav><a href="#features">Features</a><a href="#agents">Agents</a><a href="#gallery">Gallery</a><a href="#security">Security</a><a href="https://github.com/smouj/cocoloop">GitHub</a></nav>
+  <a class="btn primary" href="https://github.com/smouj/cocoloop/releases/latest">Download</a>
+</div></header>
+
+<main id="top">
+<div class="wrap">
+  <section class="hero" style="border:0;padding-top:70px">
+    <div>
+      <div class="eyebrow">LOCAL-FIRST · OPEN SOURCE · MIT</div>
+      <h1>Make something <em>unreal.</em><br>Own every sound.</h1>
+      <p class="lede">CocoLoop CL Studio is a browser DAW built for humans and agents. Sequence drums, edit MIDI, mix and export WAV or MIDI — entirely on your machine.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/smouj/cocoloop/releases/latest">Download v0.2.0 alpha</a>
+        <a class="btn ghost" href="https://github.com/smouj/cocoloop">View source</a>
+      </div>
+      <div class="chips"><span class="chip hot">Zero runtime dependencies</span><span class="chip">Python 3.10+</span><span class="chip">Codex MCP</span><span class="chip">OpenClaw CLI</span><span class="chip">No cloud</span></div>
+      <div class="meta"><span><b>MIT</b> licensed</span><span><b>44.1 kHz</b> WAV</span><span><b>14</b> agent actions</span><span><b>0 €</b> to run</span></div>
+    </div>
+    <div class="shot"><img src="screenshots/studio.png" alt="CL Studio arrangement, channel rack and inspector"></div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section id="features">
+    <div class="eyebrow">WHAT IS INSIDE</div>
+    <h2>A real workstation, not a demo.</h2>
+    <p class="sub">Every item below is implemented and covered by tests or a reproducible browser check. Read the roadmap for what is still missing.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">▦</div><h3>Arrangement &amp; Channel Rack</h3><p>1–32 bars, per-track pattern clips, 16-step sequencer, mute, preview and humanize.</p></div>
+      <div class="card"><div class="ico">♬</div><h3>Piano Roll</h3><p>MIDI notes with length and velocity, right-click delete, automatic pitch labels and previews.</p></div>
+      <div class="card"><div class="ico">◫</div><h3>Mixer &amp; master</h3><p>Volume, pan, low-pass, delay send, master fader, compressor and live stereo meter.</p></div>
+      <div class="card"><div class="ico">◉</div><h3>Original instruments</h3><p>Kick, snare, hat, clap, perc, 808 bass, electric keys, analog lead, soft pad and a sampler.</p></div>
+      <div class="card"><div class="ico">⇩</div><h3>Exports that open elsewhere</h3><p>Stereo 16-bit/44.1 kHz WAV, Standard MIDI File and portable JSON projects with embedded samples.</p></div>
+      <div class="card"><div class="ico">↺</div><h3>Shared undo</h3><p>Human and agent edits share one history. Every agent batch is atomic and reversible.</p></div>
+    </div>
+  </section>
+
+  <section id="agents">
+    <div class="split">
+      <div>
+        <div class="eyebrow">AGENT-NATIVE</div>
+        <h2>Your agent edits the session, not the source code.</h2>
+        <p class="sub">Codex connects over MCP stdio. OpenClaw uses a small CLI. Both hit the same validated action schema, gated by a consent switch that is off by default.</p>
+        <ul class="checks">
+          <li>14 documented musical actions, no shell or file-system access.</li>
+          <li>1–64 actions per batch; all apply or none do.</li>
+          <li>One undo step per transaction, visible in the Activity Log.</li>
+          <li>Bearer token plus same-origin checks on the local bridge.</li>
+        </ul>
+      </div>
+      <div class="code"><span class="c"># read real track ids first</span>
+python3 bridge/clctl.py project
+
+<span class="c"># then submit one atomic batch</span>
+python3 bridge/clctl.py batch '[
+  {<span class="k">"type"</span>:"set_tempo", <span class="k">"bpm"</span>:124},
+  {<span class="k">"type"</span>:"set_steps", <span class="k">"track_id"</span>:"cl_kick",
+   <span class="k">"steps"</span>:[0,4,8,12]},
+  {<span class="k">"type"</span>:"set_track", <span class="k">"track_id"</span>:"cl_kick",
+   <span class="k">"field"</span>:"volume", <span class="k">"value"</span>:0.9}
+]'</div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="eyebrow">GALLERY</div>
+    <h2>Dark, dense, deliberate.</h2>
+    <p class="sub">The interface is original: deep blue-charcoal surfaces, lime highlights and instrument colours. No proprietary DAW trade dress.</p>
+    <div class="gallery">
+      <figure><img src="screenshots/piano-roll.png" alt="Piano Roll"><figcaption>PIANO ROLL / MIDI NOTES</figcaption></figure>
+      <figure><img src="screenshots/mixer.png" alt="Mixer"><figcaption>MIXER / LEVELS &amp; MASTER</figcaption></figure>
+      <figure><img src="screenshots/agents.png" alt="Agent workspace"><figcaption>AI AGENTS / CONSENT &amp; GUIDE</figcaption></figure>
+      <figure><img src="social-preview.png" alt="CocoLoop brand"><figcaption>BRAND / COCOLOOP</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="security">
+    <div class="split">
+      <div>
+        <div class="eyebrow">SECURITY MODEL</div>
+        <h2>Local by default. Narrow by design.</h2>
+        <p class="sub">The bridge listens only on loopback, validates the Host header and requires a token for agent writes. The UI enforces a human consent toggle. Static files and API responses carry a restrictive CSP.</p>
+        <p class="sub" style="font-size:13px">Not independently audited. Do not expose the port to the Internet. Report vulnerabilities through GitHub private advisories.</p>
+        <a class="btn ghost" href="https://github.com/smouj/cocoloop/blob/main/SECURITY.md">Read the security policy</a>
+      </div>
+      <div class="code">127.0.0.1:38475        <span class="c"># loopback only</span>
+Host validation         <span class="c"># DNS rebinding guard</span>
+Bearer token            <span class="c"># ~/.cocoloop/agent-token</span>
+Consent toggle          <span class="c"># off by default</span>
+Action allowlist        <span class="c"># 14 types, bounded values</span>
+CSP + nosniff + DENY    <span class="c"># every response</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div style="text-align:center;max-width:760px;margin:0 auto">
+      <div class="eyebrow">GET STARTED</div>
+      <h2>Two commands. Your browser. Done.</h2>
+      <p class="sub" style="margin-left:auto;margin-right:auto">No npm install, no account, no API key. Python 3.10+ is the only requirement.</p>
+      <div class="code" style="text-align:left;max-width:640px;margin:0 auto 24px">git clone https://github.com/smouj/cocoloop.git
+cd cocoloop
+python3 server.py --open</div>
+      <a class="btn primary" href="https://github.com/smouj/cocoloop/releases/latest">Download the Windows ZIP</a>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap foot">
+  <div>© 2026 SMOUJ · CocoLoop / CL Studio · MIT licensed. FL Studio and Image-Line are unrelated trademarks.</div>
+  <div style="display:flex;gap:18px"><a href="https://github.com/smouj/cocoloop">GitHub</a><a href="https://github.com/smouj/cocoloop/blob/main/README.md">Docs</a><a href="https://github.com/smouj/cocoloop/blob/main/CODE_OF_CONDUCT.md">Conduct</a></div>
+</div></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Generated media and user sessions
+*.wav
+*.mid
+*.clstudio.json
+!examples/*.clstudio.json
+!docs/screenshots/*.png
+tests/artifacts/
+.openclaw/
+server.log
+*.log
+
+# Node (tests only)
+node_modules/
+dist/
+
+# Secrets
+.env
+.env.*
+*.pem
+agent-token

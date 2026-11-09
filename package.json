@@ -1,0 +1,28 @@
+{
+  "name": "cocoloop-cl-studio",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "CocoLoop · CL Studio — local-first, open-source DAW with agent-native editing.",
+  "license": "MIT",
+  "author": "SMOUJ <smouj@users.noreply.github.com>",
+  "homepage": "https://github.com/smouj/cocoloop",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smouj/cocoloop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smouj/cocoloop/issues"
+  },
+  "keywords": ["daw", "music", "web-audio", "sequencer", "piano-roll", "midi", "mcp", "ai-agents", "local-first"],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "python3 server.py",
+    "test": "node tests/model_test.mjs && python3 -m unittest discover -s tests -p 'test_*.py' -v",
+    "test:model": "node tests/model_test.mjs",
+    "test:python": "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+    "test:browser": "python3 tests/browser_smoke.py"
+  }
+}

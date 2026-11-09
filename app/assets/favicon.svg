@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+<title id="title">CocoLoop — CL Studio</title><desc id="desc">Emblema original: coco abierto con brotes, dentro de un anillo sonoro</desc>
+<defs><linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9BB1B9"/><stop offset=".48" stop-color="#334854"/><stop offset="1" stop-color="#778D9C"/></linearGradient><linearGradient id="shell" x1="0" x2=".83" y1="0" y2="1"><stop stop-color="#E18B38"/><stop offset=".45" stop-color="#A94B20"/><stop offset="1" stop-color="#592717"/></linearGradient><linearGradient id="leaf" x1="0" x2=".7" y1="0" y2="1"><stop stop-color="#D6FB61"/><stop offset=".6" stop-color="#73B927"/><stop offset="1" stop-color="#275E2A"/></linearGradient></defs>
+<circle cx="128" cy="131" r="108" fill="#15252B" stroke="url(#ring)" stroke-width="14"/>
+<path d="M38 124C40 81 68 54 99 43" stroke="#FFAF35" stroke-width="7" stroke-linecap="round" fill="none"/>
+<path d="M206 132c-4 44-30 78-65 94" stroke="#BAEF66" stroke-width="6" stroke-linecap="round" fill="none"/>
+<path d="M67 132c-3-18 11-38 28-49 27-20 82-19 105 6 11 12 11 31 5 52l-17 48c-11 32-32 49-64 46-39-4-64-39-62-76z" fill="url(#shell)" stroke="#60331E" stroke-width="4"/>
+<path d="M66 127c5-26 34-48 64-52 27-4 63 4 73 25 5 11-3 30-19 42-22 17-83 31-110 17-14-8-14-18-8-32z" fill="#F8FAED" stroke="#D6C3AE" stroke-width="5"/>
+<ellipse cx="132" cy="119" rx="50" ry="22" fill="#D6BCAA" transform="rotate(-13 132 119)"/>
+<path d="M108 175c1 18 5 34 10 48m12-49c5 17 7 35 7 47m12-49c7 13 11 26 12 36" stroke="#7B301E" stroke-width="4" stroke-linecap="round" fill="none" opacity=".7"/>
+<path d="M156 87c-15-35-43-49-73-30 1-25 31-46 59-29 14 9 19 25 14 59z" fill="url(#leaf)" stroke="#316D2A" stroke-width="2"/>
+<path d="M157 91c9-34 32-44 58-28 15 9 21 22 18 43-29-24-47-23-76-15z" fill="url(#leaf)" stroke="#316D2A" stroke-width="2"/>
+<path d="M155 99c2-33 13-59 31-79" stroke="#B1F05D" stroke-width="9" stroke-linecap="round" fill="none"/>
+</svg>

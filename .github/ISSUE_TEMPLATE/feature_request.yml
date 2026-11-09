@@ -1,0 +1,42 @@
+name: Feature request
+description: Suggest a focused improvement
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CocoLoop is a local-first alpha. Features that require accounts, cloud services or proprietary assets are out of scope.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workflow is painful today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the smallest useful version.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [Arrangement, Channel Rack, Piano Roll, Mixer, Audio engine, Export, Agents, UI/UX, Documentation, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This keeps the app runnable with Python 3.10+ and a browser.
+          required: true
+        - label: This does not add a required account, cloud service or paid asset.
+          required: true

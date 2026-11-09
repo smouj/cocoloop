@@ -1,0 +1,2 @@
+# Developer-only dependencies. The application itself needs only Python's standard library.
+playwright>=1.48
