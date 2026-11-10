@@ -4,7 +4,7 @@
 
 **Name:** CocoLoop (CL Studio). **Type:** DAW: Digital Audio Workstation. **Category:** original local-first music sequencer and audio editor with agent-native tools. **Target:** desktop users, producers, hobbyists, makers and software agents. **Language:** English product labels with Spanish helper copy in the alpha; full Spanish/English localization is on the roadmap.
 
-**Version:** 0.2.0 alpha (2026-11-09). The repository, CI, security headers and browser test are part of the delivered product, not future claims.
+**Version:** 0.3.0 alpha (2026-11-10). The repository, CI, security headers, browser test and desktop installers are part of the delivered product, not future claims.
 
 **Design:** purpose-built, dark restrained color palette (deep-blue-charcoal, lime-green highlight with subtle warm orange accents, instrument-color accents), original coconut and sound-disc visual identity, low clutter, dense professional work surface. Reference workflow concepts: playlist, step sequencer, piano roll, mixer — common DAW functions. No copyrighted graphical replicas, factory samples or proprietary code.
 
@@ -49,6 +49,14 @@ All actions have a mandatory `type`. There are no shell, network, URL, binary do
 | clear_track | `track_id` | Wipes track steps and notes only |
 
 The `cl_apply_actions` tool takes up to 64 ordered actions; all are validated on a candidate project before commit. A failure returns `rejected` and does not alter the project. Browser undo can reverse an entire transaction.
+
+## Delivered in 0.3.0
+
+- Electron desktop shell with native window, menu, single-instance lock and managed local server.
+- Per-user Windows installer with desktop and Start menu shortcuts; bundled server, MCP and CLI executables built with PyInstaller.
+- Default profile with 21 library items: 3 templates, 7 patterns, 4 mixer presets, 5 plugins and 2 agent profiles.
+- Library view that loads templates, applies patterns and presets, runs role-aware plugins and copies agent commands.
+- Packaged server support through `COCOLOOP_APP_DIR` and `COCOLOOP_HOME`.
 
 ## Delivered in 0.2.0
 

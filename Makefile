@@ -1,4 +1,4 @@
-.PHONY: run test model python browser screenshots clean
+.PHONY: run test model python browser screenshots desktop-dev desktop-dist clean
 
 run:
 	python3 server.py --open
@@ -16,6 +16,12 @@ browser:
 
 screenshots:
 	python3 tests/browser_smoke.py
+
+desktop-dev:
+	cd desktop && npm start
+
+desktop-dist:
+	cd desktop && npm run dist
 
 clean:
 	rm -rf tests/artifacts __pycache__ **/__pycache__

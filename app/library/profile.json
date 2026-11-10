@@ -1,0 +1,607 @@
+{
+  "schema": "cocoloop.profile",
+  "version": 1,
+  "id": "cocoloop-default",
+  "name": "CocoLoop Default Studio",
+  "description": "Batteries-included starter profile: three project templates, drum and melody patterns, mixer presets, five built-in plugins and two agent profiles.",
+  "defaultProject": "trap-starter",
+  "appearance": {
+    "accent": "#c4ee7c",
+    "theme": "midnight-coconut"
+  },
+  "sections": [
+    {
+      "id": "templates",
+      "title": "Project templates",
+      "icon": "file-plus",
+      "description": "Complete sessions with tracks, patterns, clips and mixer values.",
+      "items": [
+        {
+          "id": "trap-starter",
+          "name": "Trap starter",
+          "description": "140 BPM, 808 sub, rolling hats, keys and lead.",
+          "file": "templates/trap-starter.json",
+          "badge": "8 bars · 140 BPM"
+        },
+        {
+          "id": "house-starter",
+          "name": "House starter",
+          "description": "124 BPM, four-on-the-floor, claps, chords and bass.",
+          "file": "templates/house-starter.json",
+          "badge": "8 bars · 124 BPM"
+        },
+        {
+          "id": "lofi-starter",
+          "name": "Lo-fi starter",
+          "description": "86 BPM, dusty drums, soft keys and relaxed bass.",
+          "file": "templates/lofi-starter.json",
+          "badge": "8 bars · 86 BPM"
+        }
+      ]
+    },
+    {
+      "id": "patterns",
+      "title": "Patterns",
+      "icon": "grid",
+      "description": "Apply to the selected track. Drum patterns need a drum track; melodies need a synth track.",
+      "items": [
+        {
+          "id": "house-four",
+          "name": "Four on the floor",
+          "target": "drum",
+          "description": "Kick on every quarter.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$selected",
+              "steps": [
+                0,
+                4,
+                8,
+                12
+              ]
+            }
+          ]
+        },
+        {
+          "id": "trap-hats",
+          "name": "Trap hats",
+          "target": "drum",
+          "description": "Straight eighths with two ghost notes.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$selected",
+              "steps": [
+                0,
+                2,
+                3,
+                6,
+                8,
+                10,
+                11,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lofi-kick",
+          "name": "Lo-fi kick",
+          "target": "drum",
+          "description": "Sparse, behind the beat.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$selected",
+              "steps": [
+                0,
+                7,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "id": "breakbeat",
+          "name": "Breakbeat",
+          "target": "drum",
+          "description": "Sixteenth-note syncopation.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$selected",
+              "steps": [
+                0,
+                3,
+                6,
+                7,
+                10,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "id": "backbeat",
+          "name": "Backbeat clap",
+          "target": "drum",
+          "description": "Clap on beats two and four.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$selected",
+              "steps": [
+                4,
+                12
+              ]
+            }
+          ]
+        },
+        {
+          "id": "deep-808",
+          "name": "Deep 808 line",
+          "target": "synth",
+          "description": "Four long sub notes with a low fifth.",
+          "actions": [
+            {
+              "type": "clear_track",
+              "track_id": "$selected"
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 36,
+              "start": 0,
+              "length": 4,
+              "velocity": 108
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 36,
+              "start": 4,
+              "length": 4,
+              "velocity": 96
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 43,
+              "start": 8,
+              "length": 4,
+              "velocity": 102
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 41,
+              "start": 12,
+              "length": 4,
+              "velocity": 90
+            }
+          ]
+        },
+        {
+          "id": "lofi-keys",
+          "name": "Lo-fi chord bed",
+          "target": "synth",
+          "description": "Two soft chords, eight steps each.",
+          "actions": [
+            {
+              "type": "clear_track",
+              "track_id": "$selected"
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 60,
+              "start": 0,
+              "length": 8,
+              "velocity": 70
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 63,
+              "start": 0,
+              "length": 8,
+              "velocity": 66
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 67,
+              "start": 0,
+              "length": 8,
+              "velocity": 64
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 58,
+              "start": 8,
+              "length": 8,
+              "velocity": 70
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 62,
+              "start": 8,
+              "length": 8,
+              "velocity": 66
+            },
+            {
+              "type": "add_note",
+              "track_id": "$selected",
+              "pitch": 65,
+              "start": 8,
+              "length": 8,
+              "velocity": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "presets",
+      "title": "Mixer presets",
+      "icon": "sliders",
+      "description": "Apply to the selected track. Values are intentionally conservative.",
+      "items": [
+        {
+          "id": "preset-sub",
+          "name": "Sub focus",
+          "description": "Loud, centered, no delay.",
+          "actions": [
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "volume",
+              "value": 0.78
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "pan",
+              "value": 0
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "cutoff",
+              "value": 14000
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "delay",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "preset-wide",
+          "name": "Wide keys",
+          "description": "Lower level, slight left pan, delay send.",
+          "actions": [
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "volume",
+              "value": 0.44
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "pan",
+              "value": -0.18
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "cutoff",
+              "value": 9200
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "delay",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "id": "preset-drums",
+          "name": "Tight drums",
+          "description": "Bright, dry and forward.",
+          "actions": [
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "volume",
+              "value": 0.82
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "cutoff",
+              "value": 16000
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "delay",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "preset-dub",
+          "name": "Dub lead",
+          "description": "Lower, panned right, long delay.",
+          "actions": [
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "volume",
+              "value": 0.4
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "pan",
+              "value": 0.24
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "cutoff",
+              "value": 7800
+            },
+            {
+              "type": "set_track",
+              "track_id": "$selected",
+              "field": "delay",
+              "value": 0.38
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plugins",
+      "title": "Built-in plugins",
+      "icon": "sparkles",
+      "description": "Deterministic, local musical helpers. They resolve track roles automatically and become one undo step.",
+      "items": [
+        {
+          "id": "four-on-floor",
+          "name": "Four on the Floor",
+          "description": "Sets the kick to quarters and tightens it.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$kick",
+              "steps": [
+                0,
+                4,
+                8,
+                12
+              ]
+            },
+            {
+              "type": "set_track",
+              "track_id": "$kick",
+              "field": "volume",
+              "value": 0.84
+            },
+            {
+              "type": "set_track",
+              "track_id": "$kick",
+              "field": "cutoff",
+              "value": 16000
+            }
+          ]
+        },
+        {
+          "id": "humanize-hats",
+          "name": "Humanize Hats",
+          "description": "Adds ghost notes and a slightly lower level.",
+          "actions": [
+            {
+              "type": "set_steps",
+              "track_id": "$hat",
+              "steps": [
+                0,
+                2,
+                3,
+                6,
+                8,
+                10,
+                11,
+                14
+              ]
+            },
+            {
+              "type": "set_track",
+              "track_id": "$hat",
+              "field": "volume",
+              "value": 0.52
+            }
+          ]
+        },
+        {
+          "id": "chord-stack",
+          "name": "Chord Stack",
+          "description": "Writes a two-chord progression into the keys track.",
+          "actions": [
+            {
+              "type": "clear_track",
+              "track_id": "$keys"
+            },
+            {
+              "type": "add_note",
+              "track_id": "$keys",
+              "pitch": 60,
+              "start": 0,
+              "length": 8,
+              "velocity": 82
+            },
+            {
+              "type": "add_note",
+              "track_id": "$keys",
+              "pitch": 64,
+              "start": 0,
+              "length": 8,
+              "velocity": 78
+            },
+            {
+              "type": "add_note",
+              "track_id": "$keys",
+              "pitch": 67,
+              "start": 0,
+              "length": 8,
+              "velocity": 76
+            },
+            {
+              "type": "add_note",
+              "track_id": "$keys",
+              "pitch": 57,
+              "start": 8,
+              "length": 8,
+              "velocity": 82
+            },
+            {
+              "type": "add_note",
+              "track_id": "$keys",
+              "pitch": 60,
+              "start": 8,
+              "length": 8,
+              "velocity": 78
+            },
+            {
+              "type": "add_note",
+              "track_id": "$keys",
+              "pitch": 64,
+              "start": 8,
+              "length": 8,
+              "velocity": 76
+            }
+          ]
+        },
+        {
+          "id": "mix-balance",
+          "name": "Balance Mix",
+          "description": "Sets role-based levels for a rough, safe balance.",
+          "actions": [
+            {
+              "type": "set_track",
+              "track_id": "$kick",
+              "field": "volume",
+              "value": 0.84
+            },
+            {
+              "type": "set_track",
+              "track_id": "$snare",
+              "field": "volume",
+              "value": 0.7
+            },
+            {
+              "type": "set_track",
+              "track_id": "$hat",
+              "field": "volume",
+              "value": 0.5
+            },
+            {
+              "type": "set_track",
+              "track_id": "$clap",
+              "field": "volume",
+              "value": 0.54
+            },
+            {
+              "type": "set_track",
+              "track_id": "$bass",
+              "field": "volume",
+              "value": 0.74
+            },
+            {
+              "type": "set_track",
+              "track_id": "$keys",
+              "field": "volume",
+              "value": 0.46
+            },
+            {
+              "type": "set_track",
+              "track_id": "$lead",
+              "field": "volume",
+              "value": 0.34
+            },
+            {
+              "type": "set_master",
+              "volume": 0.78
+            }
+          ]
+        },
+        {
+          "id": "lofi-dust",
+          "name": "Lo-fi Dust",
+          "description": "Darkens keys and bass, adds delay and a softer master.",
+          "actions": [
+            {
+              "type": "set_track",
+              "track_id": "$keys",
+              "field": "cutoff",
+              "value": 5200
+            },
+            {
+              "type": "set_track",
+              "track_id": "$keys",
+              "field": "delay",
+              "value": 0.18
+            },
+            {
+              "type": "set_track",
+              "track_id": "$bass",
+              "field": "cutoff",
+              "value": 2600
+            },
+            {
+              "type": "set_track",
+              "track_id": "$hat",
+              "field": "cutoff",
+              "value": 9000
+            },
+            {
+              "type": "set_master",
+              "volume": 0.7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agent profiles",
+      "icon": "sparkles",
+      "description": "Copy a profile into your agent. Consent stays off until you enable it in the Inspector.",
+      "items": [
+        {
+          "id": "codex",
+          "name": "Codex · MCP stdio",
+          "description": "Local MCP server with cl_get_project and cl_apply_actions.",
+          "command": "codex mcp add cocoloop-cl-studio -- \"$env:LOCALAPPDATA\\Programs\\CocoLoop\\resources\\server\\cocoloop-mcp.exe\"",
+          "notes": "PowerShell. En un checkout de desarrollo: python3 bridge/mcp_server.py"
+        },
+        {
+          "id": "openclaw",
+          "name": "OpenClaw · CLI",
+          "description": "Structured musical actions through the local CLI adapter.",
+          "command": "& \"$env:LOCALAPPDATA\\Programs\\CocoLoop\\resources\\server\\cocoloop-cli.exe\" project",
+          "notes": "PowerShell. Requiere permiso de ejecución local en el mismo equipo."
+        }
+      ]
+    }
+  ]
+}

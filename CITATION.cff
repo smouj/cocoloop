@@ -9,8 +9,8 @@ authors:
 repository-code: "https://github.com/smouj/cocoloop"
 url: "https://smouj.github.io/cocoloop/"
 license: MIT
-version: "0.2.0"
-date-released: "2026-11-09"
+version: "0.3.0"
+date-released: "2026-11-10"
 keywords:
   - digital audio workstation
   - web audio

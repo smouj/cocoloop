@@ -26,6 +26,10 @@ server.log
 # Node (tests only)
 node_modules/
 dist/
+desktop/node_modules/
+desktop/dist/
+desktop/.build/
+desktop/resources/server/*.exe
 
 # Secrets
 .env

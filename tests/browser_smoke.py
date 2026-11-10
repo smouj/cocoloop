@@ -72,6 +72,13 @@ async def main():
             await page.locator(f'.nav-link[data-view="{view}"]').click()
             await page.wait_for_timeout(350)
             await page.screenshot(path=str(SCREENSHOTS / f"{name}.png"))
+        await page.locator('.nav-link[data-view="library"]').click()
+        await page.wait_for_timeout(700)
+        assert await page.locator(".library-item").count() >= 20
+        await page.screenshot(path=str(SCREENSHOTS / "library.png"))
+        await page.locator('[data-library-item="mix-balance"]').click()
+        await page.wait_for_timeout(450)
+        assert "Balance Mix aplicado" in await page.locator("#toast").inner_text()
         await page.locator('.nav-link[data-view="studio"]').click()
 
         await page.locator("#agent-allowed").check()

@@ -30,7 +30,7 @@ def main():
             msg=json.loads(line);mid=msg.get('id');method=msg.get('method');args=msg.get('params') or {}
             if mid is None:continue
             if method=='initialize':
-                reply(mid,{'protocolVersion':args.get('protocolVersion','2025-06-18'),'capabilities':{'tools':{'listChanged':False}},'serverInfo':{'name':'cocoloop-cl-studio','version':'0.2.0'},'instructions':'CL Studio local music editor. Read current project, ask user to enable agent editing, and make atomic changes through cl_apply_actions.'})
+                reply(mid,{'protocolVersion':args.get('protocolVersion','2025-06-18'),'capabilities':{'tools':{'listChanged':False}},'serverInfo':{'name':'cocoloop-cl-studio','version':'0.3.0'},'instructions':'CL Studio local music editor. Read current project, ask user to enable agent editing, and make atomic changes through cl_apply_actions.'})
             elif method=='ping':reply(mid,{})
             elif method=='tools/list':reply(mid,{'tools':TOOL_SCHEMAS})
             elif method=='tools/call':

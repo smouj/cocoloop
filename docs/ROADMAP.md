@@ -12,7 +12,7 @@ The priorities below are objectives, not claims of implemented functionality. Ch
 - [x] Local authenticated action queue, agent consent, Codex MCP, OpenClaw CLI.
 - [x] Model and Python HTTP API regression tests.
 
-## v0.2 — Reliable music creation (current)
+## v0.2 — Reliable music creation (released)
 
 - [x] Master fader, metronome, note velocity and duplicate track.
 - [x] Security headers, directory-listing disabled, host validation tests.
@@ -29,9 +29,12 @@ The priorities below are objectives, not claims of implemented functionality. Ch
 - [ ] Accessibility audit and Spanish/English localization.
 - [ ] Full integration, snapshot and end-to-end tests plus security review.
 
-## v0.3 — Desktop foundation
+## v0.3 — Desktop foundation (current)
 
-- [ ] Tauri 2 Windows/Linux/macOS shell with signed, reproducible builds where feasible.
+- [x] Electron desktop shell with native window, menu, single-instance lock and bundled server.
+- [x] Per-user Windows installer with desktop/Start menu shortcuts and PyInstaller sidecars.
+- [x] Default studio profile, library browser and five built-in plugins.
+- [ ] Signed installers, reproducible desktop builds and automatic updates.
 - [ ] Native Rust (CPAL-based) or C++ audio engine in a realtime-safe thread.
 - [ ] Stable serialized project format and migrations.
 - [ ] Audio/MIDI device selection, latency calibration, keyboard and MIDI controllers.

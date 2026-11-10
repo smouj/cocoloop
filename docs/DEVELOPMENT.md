@@ -74,3 +74,29 @@ Use a 1600×1000 viewport and keep the UI free of toasts while capturing.
 - [ ] Confirm no secrets, samples or personal projects are staged.
 - [ ] Tag `vX.Y.Z` and push; the release workflow publishes the ZIP and `SHA256SUMS.txt`.
 - [ ] Update the GitHub release notes and roadmap checkboxes.
+
+## Desktop build
+
+The desktop shell lives in `desktop/` and uses Electron. In development:
+
+```sh
+cd desktop
+npm install
+npm start
+```
+
+The packaged app starts a PyInstaller build of `server.py` and loads the bundled `app/` directory. Build the sidecars and installer on Windows:
+
+```powershell
+cd desktop
+npm install
+py -m pip install --user pyinstaller
+py -m PyInstaller --noconfirm --onefile --name cocoloop-server --icon ..\app\assets\cocoloop.ico --distpath resources\server --workpath .build\server --specpath .build ..\server.py
+py -m PyInstaller --noconfirm --onefile --name cocoloop-mcp --paths ..\bridge --distpath resources\server --workpath .build\mcp --specpath .build ..\bridge\mcp_server.py
+py -m PyInstaller --noconfirm --onefile --name cocoloop-cli --paths ..\bridge --distpath resources\server --workpath .build\cli --specpath .build ..\bridge\clctl.py
+npm run dist
+```
+
+The installer is `desktop/dist/CocoLoop-Setup-<version>.exe`. The default library is `app/library/profile.json`; add items there and they appear in the Library view without rebuilding the shell.
+
+The server reads `COCOLOOP_APP_DIR` (static UI root) and `COCOLOOP_HOME` (token directory). Electron sets the former to `resources/app` and leaves the token at `%USERPROFILE%\.cocoloop\agent-token` so MCP and CLI share it.

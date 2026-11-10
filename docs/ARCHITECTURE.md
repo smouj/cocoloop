@@ -11,7 +11,7 @@
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│ Browser (http://127.0.0.1:38475)                            │
+│ Electron window / browser (http://127.0.0.1:38475)          │
 │  app/index.html  app/styles.css                             │
 │  app/main.js    UI state, rendering, bridge polling         │
 │  app/model.js   schema, validation, atomic actions          │
@@ -27,6 +27,11 @@
 ┌───────────────▼─────────────────────────────────────────────┐
 │ bridge/clctl.py · bridge/mcp_server.py · bridge/client.py   │
 └─────────────────────────────────────────────────────────────┘
+
+The Windows installer bundles the UI under resources/app, the server,
+MCP and CLI executables under resources/server, and starts the server
+from the Electron main process. The token stays in the user profile so
+the adapters keep working across app updates.
 ```
 
 ## Invariants

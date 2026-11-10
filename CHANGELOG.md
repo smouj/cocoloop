@@ -2,6 +2,28 @@
 
 All notable changes are documented here. The project is an alpha; APIs may change with a migration note.
 
+## 0.3.0 — 2026-11-10
+
+### Added
+
+- **Desktop application**: Electron shell for Windows with a native window, application menu, single-instance lock and automatic local server management.
+- **Installer**: per-user NSIS installer, desktop shortcut and Start menu entry, built with electron-builder.
+- **Bundled runtime**: PyInstaller builds of the HTTP server, MCP stdio adapter and CLI adapter, so the installed app does not require Python.
+- **Default profile**: `CocoLoop Default Studio` with 21 ready items: 3 project templates, 7 patterns, 4 mixer presets, 5 built-in plugins and 2 agent profiles.
+- **Library view**: browse templates, patterns, presets, plugins and agent profiles; apply or copy them in one click.
+- **Built-in plugins**: Four on the Floor, Humanize Hats, Chord Stack, Balance Mix and Lo-fi Dust, resolved by track role and committed as one undo step.
+- **Desktop documentation** and a Windows build workflow.
+
+### Changed
+
+- Server accepts `COCOLOOP_APP_DIR` for packaged resources and `COCOLOOP_HOME` for the token location.
+- Version strings, README, Spanish README, roadmap, specification and landing page updated for 0.3.0.
+
+### Verified
+
+- Browser suite covers the Library view, item count and a plugin application.
+- Packaged `CocoLoop.exe` starts the bundled server and serves the UI on loopback.
+
 ## 0.2.0 — 2026-11-09
 
 ### Added

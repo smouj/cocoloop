@@ -18,7 +18,7 @@
 
 </div>
 
-> **Alpha 0.2.0.** A working browser DAW with a local Python bridge — not a feature-complete FL Studio replacement and not a native installer. No account, no cloud, no telemetry, no required package installs. Every sound, project and export stays on your machine.
+> **Alpha 0.3.0.** A working DAW in a native desktop window, with a bundled local server and a default studio profile. Not a feature-complete FL Studio replacement. No account, no cloud, no telemetry and no required Python install for the Windows app. Every sound, project and export stays on your machine.
 
 ![CocoLoop CL Studio](docs/screenshots/studio.png)
 
@@ -44,13 +44,23 @@ Most DAWs are closed, heavy and cloud-adjacent. Most "AI music" tools generate a
 | **Export** | Stereo 16-bit / 44.1 kHz WAV, Standard MIDI File, portable `.clstudio.json` |
 | **Undo** | Shared undo/redo history for human and agent edits |
 | **Agents** | Local MCP stdio server (Codex), CLI adapter (OpenClaw), 14 validated action types |
+| **Desktop** | Native Windows window, application menu, desktop shortcut, bundled server/MCP/CLI executables |
+| **Default library** | 3 templates, 7 patterns, 4 mixer presets, 5 built-in plugins and 2 agent profiles |
 | **Platforms** | Windows 10/11, Linux and macOS with any modern Chromium/Firefox browser |
 
 ## Quick start
 
-### Windows
+### Windows desktop app (recommended)
 
-1. Download the latest ZIP from [Releases](https://github.com/smouj/cocoloop/releases).
+1. Download `CocoLoop-Setup-0.3.0.exe` from [Releases](https://github.com/smouj/cocoloop/releases/tag/v0.3.0).
+2. Run the installer. It installs per user, creates a **CocoLoop** desktop shortcut and starts the app.
+3. Open **Library** for the default profile, templates, patterns, presets and plugins.
+
+No Python, Node or package manager is needed by the installed app: the local server, MCP adapter and CLI adapter are bundled.
+
+### Windows portable ZIP
+
+1. Download the ZIP from [Releases](https://github.com/smouj/cocoloop/releases/tag/v0.3.0).
 2. Extract it, for example to `C:\CocoLoop`.
 3. Install [Python 3.10+](https://www.python.org/) if needed.
 4. Double-click `start-windows.bat`, or run:
@@ -117,9 +127,13 @@ The MCP server exposes `cl_get_project` and `cl_apply_actions`. Read first, then
 |---|---|
 | ![Piano Roll](docs/screenshots/piano-roll.png) | ![Mixer](docs/screenshots/mixer.png) |
 
-| Agent workspace | Brand |
+| Library | Agent workspace |
 |---|---|
-| ![Agents](docs/screenshots/agents.png) | ![CocoLoop logo](app/assets/cocoloop-color-512.png) |
+| ![Library](docs/screenshots/library.png) | ![Agents](docs/screenshots/agents.png) |
+
+| Brand | Desktop |
+|---|---|
+| ![CocoLoop logo](app/assets/cocoloop-color-512.png) | ![CocoLoop desktop app](docs/screenshots/desktop.png) |
 
 ## Architecture
 
@@ -137,6 +151,8 @@ flowchart LR
 - `app/main.js` — UI rendering and event wiring.
 - `server.py` — static server, authenticated command queue, security headers.
 - `bridge/` — MCP stdio adapter, Python client and CLI.
+- `desktop/` — Electron shell, Windows installer and PyInstaller build scripts.
+- `app/library/` — default profile, templates, patterns, presets, plugins and agent profiles.
 
 Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for invariants and extension points.
 
@@ -153,7 +169,7 @@ npm test                        # or: node tests/model_test.mjs && python3 -m un
 python3 tests/browser_smoke.py  # needs a running server + Playwright
 ```
 
-The suite covers immutable action batches, every documented action, schema limits, WAV headers, MIDI channel routing, HTTP authorization, CSP headers, host validation and MCP initialization. CI runs the model tests on Node 22/24, Python tests on 3.10–3.13, and a real headless Chromium smoke test on Linux.
+The suite covers immutable action batches, every documented action, schema limits, WAV headers, MIDI channel routing, HTTP authorization, CSP headers, host validation, MCP initialization and the Library view. CI runs the model tests on Node 22/24, Python tests on 3.10–3.13, and a real headless Chromium smoke test on Linux. The desktop installer is built and smoke-tested on Windows.
 
 ## Security model
 
@@ -166,7 +182,7 @@ The suite covers immutable action batches, every documented action, schema limit
 
 ## Status and roadmap
 
-Alpha 0.2.0 is usable for sketching, sound design experiments, agent demos and teaching. The [roadmap](docs/ROADMAP.md) tracks the path to a reliable v1: pattern variants and automation, IndexedDB sample autosave, latency work, a Tauri desktop shell, signed installers and an independent security review.
+Alpha 0.3.0 is usable for sketching, sound design experiments, agent demos and teaching. The desktop app is signed only where a certificate is available; this build is unsigned. The [roadmap](docs/ROADMAP.md) tracks the path to a reliable v1: pattern variants and automation, IndexedDB sample autosave, latency work, signed installers and an independent security review.
 
 ## Contributing
 

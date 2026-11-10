@@ -15,7 +15,7 @@
 
 </div>
 
-> **Alpha 0.2.0.** Un DAW de navegador funcional con puente local en Python. No es un sustituto completo de FL Studio ni un instalador nativo. Sin cuentas, sin nube, sin telemetría y sin instalar paquetes: todo el audio, los proyectos y las exportaciones se quedan en tu equipo.
+> **Alpha 0.3.0.** Un DAW funcional en ventana de escritorio, con servidor local incluido y un perfil de estudio predeterminado. No es un sustituto completo de FL Studio. Sin cuentas, sin nube, sin telemetría y sin necesidad de instalar Python para la app de Windows. Todo el audio, los proyectos y las exportaciones se quedan en tu equipo.
 
 ![CL Studio](docs/screenshots/studio.png)
 
@@ -27,12 +27,22 @@
 - Exportación WAV estéreo 16 bits / 44,1 kHz y MIDI estándar; proyectos portables `.clstudio.json`.
 - Integración con Codex (MCP stdio) y OpenClaw (CLI) mediante acciones musicales validadas, consentimiento humano y deshacer compartido.
 - Historial de undo/redo para cambios humanos y de agentes; los lotes son atómicos.
+- **App de escritorio** con ventana nativa, menú, acceso directo y servidor/MCP/CLI incluidos.
+- **Librería predeterminada** con 3 plantillas, 7 patrones, 4 presets de mezcla, 5 plugins y 2 perfiles de agente.
 
 ## Inicio rápido
 
-### Windows
+### App de escritorio para Windows (recomendada)
 
-1. Descarga el ZIP desde [Releases](https://github.com/smouj/cocoloop/releases).
+1. Descarga `CocoLoop-Setup-0.3.0.exe` desde [Releases](https://github.com/smouj/cocoloop/releases/tag/v0.3.0).
+2. Ejecuta el instalador: instala por usuario, crea el acceso directo **CocoLoop** en el escritorio y abre la app.
+3. Entra en **Library** para usar el perfil predeterminado, plantillas, patrones, presets y plugins.
+
+La app instalada no necesita Python ni Node: el servidor local, el adaptador MCP y el CLI van incluidos.
+
+### ZIP portable para Windows
+
+1. Descarga el ZIP desde [Releases](https://github.com/smouj/cocoloop/releases/tag/v0.3.0).
 2. Extrae, por ejemplo, en `C:\CocoLoop`.
 3. Instala [Python 3.10+](https://www.python.org/) si no lo tienes.
 4. Abre `start-windows.bat` o ejecuta `py server.py --open`.
@@ -71,7 +81,7 @@ Activa **Allow agent editing** en el inspector: está desactivado por defecto y 
 
 ## Estado
 
-Alpha utilizable para bocetos, experimentos de sonido, demos de agentes y docencia. El [roadmap](docs/ROADMAP.md) describe el camino a v1: variantes de patrón, automatización, autoguardado con muestras en IndexedDB, latencia, escritorio Tauri, instaladores firmados y auditoría de seguridad.
+Alpha 0.3.0 utilizable para bocetos, experimentos de sonido, demos de agentes y docencia. El instalador de esta versión no está firmado digitalmente. El [roadmap](docs/ROADMAP.md) describe el camino a v1: variantes de patrón, automatización, autoguardado con muestras en IndexedDB, latencia, instaladores firmados y auditoría de seguridad.
 
 ## Licencia y marca
 

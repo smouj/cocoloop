@@ -1,5 +1,23 @@
 # CocoLoop — Conexión de agentes
 
+## App instalada en Windows
+
+El instalador incluye los adaptadores en `%LOCALAPPDATA%\Programs\CocoLoop\resources\server\`. No hace falta Python.
+
+```powershell
+codex mcp add cocoloop-cl-studio -- "$env:LOCALAPPDATA\Programs\CocoLoop\resources\server\cocoloop-mcp.exe"
+codex mcp list
+```
+
+Para OpenClaw:
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\CocoLoop\resources\server\cocoloop-cli.exe" project
+& "$env:LOCALAPPDATA\Programs\CocoLoop\resources\server\cocoloop-cli.exe" action '{"type":"set_tempo","bpm":132}'
+```
+
+El servidor de la app escucha en `127.0.0.1:38475`. Si el puerto está ocupado, la app usa el siguiente libre; en ese caso define `COCOLOOP_URL`.
+
 ## Codex
 
 1. Ejecuta `py server.py --open` desde la carpeta del proyecto (en Linux y macOS `python3 server.py --open`).

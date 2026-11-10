@@ -12,7 +12,8 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlsplit, parse_qs
 
 BASE = Path(__file__).resolve().parent
-TOKEN_FILE = Path.home() / '.cocoloop' / 'agent-token'
+APP_DIR = Path(os.environ.get('COCOLOOP_APP_DIR', str(BASE / 'app'))).resolve()
+TOKEN_FILE = Path(os.environ.get('COCOLOOP_HOME', str(Path.home() / '.cocoloop'))) / 'agent-token'
 TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
 if not TOKEN_FILE.exists():
     try:
@@ -46,7 +47,7 @@ ALLOWED_ACTIONS = {
 class Handler(SimpleHTTPRequestHandler):
     server_version = 'CLStudio/0.2'
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=str(BASE / 'app'), **kwargs)
+        super().__init__(*args, directory=str(APP_DIR), **kwargs)
 
     def log_message(self, fmt, *args):
         print('[CL Studio]', fmt % args)
@@ -112,7 +113,7 @@ class Handler(SimpleHTTPRequestHandler):
         uri = urlsplit(self.path)
         if uri.path == '/api/health':
             with LOCK:
-                self.respond({'ok': True, 'version': '0.2.0', 'ui_online': time.monotonic() - LAST_SEEN < 8})
+                self.respond({'ok': True, 'version': '0.3.0', 'ui_online': time.monotonic() - LAST_SEEN < 8})
             return
         if uri.path == '/api/state':
             if not self.authorized():
@@ -200,7 +201,7 @@ def main():
     args=parser.parse_args()
     if not 1024<=args.port<=65535:parser.error('Puerto fuera de rango')
     httpd=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
-    print(f'\n  CL STUDIO 0.2.0  ·  http://127.0.0.1:{args.port}')
+    print(f'\n  CL STUDIO 0.3.0  ·  http://127.0.0.1:{args.port}')
     print(f'  Token local: {TOKEN_FILE}  (no compartir)')
     print('  Ctrl+C para cerrar\n')
     if args.open:

@@ -37,6 +37,7 @@ try{
 }catch{project=starterProject('trap');}
 let selectedId=project.tracks.find(t=>t.instrument==='bass')?.id||project.tracks[0]?.id;
 let undoStack=[],redoStack=[],currentView='studio',noteLength=2,noteVelocity=100,looping=true,metronomeOn=false,playStep=-1;
+let libraryProfile=null,libraryError='';
 let bridgeOnline=false,agentEditingAllowed=false,connectionSequence=0,toastTimer=0;
 const activity=[];
 const audio=new AudioEngine(step=>{playStep=step;paintPlayhead();},()=>updatePlayButton(),level=>paintMeter(level));
@@ -288,9 +289,11 @@ $('#modal-overlay').onclick=e=>{if(e.target.id==='modal-overlay')hideModal()};
 function chooseView(view){
   currentView=view;$$('.nav-link[data-view]').forEach(el=>el.classList.toggle('selected',el.dataset.view===view));
   $('#scroll-area').scrollTop=0;
-  const area=$('.main-area');area.classList.remove('view-piano','view-mixer','view-agents');
+  const area=$('.main-area');area.classList.remove('view-piano','view-mixer','view-agents','view-library');
   if(view!=='studio')area.classList.add('view-'+view);
   const existing=$('#agent-full-panel');if(existing)existing.remove();
+  const existingLibrary=$('#library-full-panel');if(existingLibrary)existingLibrary.remove();
+  if(view==='library'){renderLibraryPanel();return;}
   if(view==='agents'){
     const panel=document.createElement('section');panel.className='panel agent-full';panel.id='agent-full-panel';
     panel.innerHTML=`<div class="eyebrow">AGENT-NATIVE MUSIC PRODUCTION</div><h2>Your AI can edit this session.</h2><p>Conecta Codex mediante MCP u OpenClaw mediante el adaptador de comandos. Los agentes pueden ver las pistas y modificar el proyecto musical con permisos explícitos.</p><label class="toggle-row" for="agent-allowed-page" style="max-width:340px"><div><strong>Autorizar edición por agentes</strong><small>Desactivado al abrir cada sesión</small></div><input type="checkbox" id="agent-allowed-page" role="switch" ${agentEditingAllowed?'checked':''}></label><div class="section-label" style="margin:22px 0 10px">ENCARGO PARA TU AGENTE</div><textarea id="agent-task-text" class="agent-task-text" aria-label="Encargo para el agente" placeholder="Crea un patrón de batería house a 124 BPM con un bajo sencillo…"></textarea><button class="outline-button" id="agent-task-copy" style="max-width:310px">${ico('copy')} Copiar encargo e instrucciones</button><p style="margin-top:13px;font-size:11px">En esta versión alfa, el encargo se copia para enviarlo a tu agente. El chat directo dentro de CL Studio está previsto para una versión posterior.</p><pre>Codex:  python bridge/mcp_server.py\nOpenClaw: python bridge/clctl.py project\n           python bridge/clctl.py action '{"type":"set_tempo","bpm":132}'\n\nConsulta README.md para configurar las rutas completas.</pre><button class="outline-button" id="agent-view-copy">${ico('copy')} Copiar guía de conexión</button>`;
@@ -326,10 +329,72 @@ window.addEventListener('keydown',e=>{
   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
   if(e.code==='Space'){e.preventDefault();togglePlay();}
   if(e.key==='Escape')hideModal();
-  if(['1','2','3','4'].includes(e.key))chooseView(['studio','piano','mixer','agents'][Number(e.key)-1]);
+  if(['1','2','3','4','5'].includes(e.key))chooseView(['studio','piano','mixer','library','agents'][Number(e.key)-1]);
   if(e.key.toLowerCase()==='m')$('#metronome').click();
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();}
 });
 window.addEventListener('beforeunload',()=>{if(audio.playing)audio.stop()});
-render();heartbeat();setInterval(heartbeat,1100);syncState();
+function libraryItemCard(section,item){
+  const verb=section.id==='templates'?'Load':section.id==='agents'?'Copy':'Apply';
+  return `<button class="library-item" data-library-section="${esc(section.id)}" data-library-item="${esc(item.id)}"><span class="library-item-top"><strong>${esc(item.name)}</strong><span class="library-tag">${esc(item.badge||section.title)}</span></span><span class="library-desc">${esc(item.description||'')}</span><span class="library-action">${verb} →</span></button>`;
+}
+function renderLibraryPanel(){
+  const existing=$('#library-full-panel');if(existing)existing.remove();
+  const panel=document.createElement('section');panel.className='panel library-full';panel.id='library-full-panel';
+  if(!libraryProfile){
+    panel.innerHTML=`<div class="library-hero"><div><div class="eyebrow">DEFAULT PROFILE</div><h2>Loading library…</h2><p>${libraryError?esc(libraryError):'Reading the bundled CocoLoop profile.'}</p></div></div>`;
+  }else{
+    const total=libraryProfile.sections.reduce((sum,section)=>sum+section.items.length,0);
+    panel.innerHTML=`<div class="library-hero"><div><div class="eyebrow">DEFAULT PROFILE / ${esc(libraryProfile.id.toUpperCase())}</div><h2>${esc(libraryProfile.name)}</h2><p>${esc(libraryProfile.description)}</p></div><div class="library-total"><b>${total}</b><span>READY ITEMS</span><small>v${esc(String(libraryProfile.version))}</small></div></div><div class="library-nav">${libraryProfile.sections.map(section=>`<a href="#library-${esc(section.id)}">${esc(section.title)}<i>${section.items.length}</i></a>`).join('')}</div>${libraryProfile.sections.map(section=>`<section class="library-section" id="library-${esc(section.id)}"><div class="library-section-head"><div><h3>${esc(section.title)}</h3><p>${esc(section.description||'')}</p></div><span class="library-count">${section.items.length} ITEMS</span></div><div class="library-grid">${section.items.map(item=>libraryItemCard(section,item)).join('')}</div></section>`).join('')}`;
+  }
+  $('#scroll-area').insertBefore(panel,$('.bottom-note'));
+  if(libraryProfile)panel.querySelectorAll('[data-library-item]').forEach(button=>button.onclick=()=>runLibraryItem(button.dataset.librarySection,button.dataset.libraryItem));
+}
+function resolveLibraryActions(actions){
+  const resolved=[];
+  for(const action of actions||[]){
+    const copy={...action};
+    if(typeof copy.track_id==='string'&&copy.track_id.startsWith('$')){
+      const role=copy.track_id.slice(1);
+      const track=role==='selected'?selected():project.tracks.find(t=>t.instrument===role);
+      if(!track)continue;
+      copy.track_id=track.id;
+    }
+    resolved.push(copy);
+  }
+  return resolved;
+}
+function applyLibraryActions(item,requireType){
+  const track=selected();
+  if(!track)return toast('Selecciona una pista',true);
+  if(requireType&&track.type!==requireType)return toast(requireType==='drum'?'Selecciona una pista de batería':'Selecciona una pista sintetizada',true);
+  const actions=resolveLibraryActions(item.actions);
+  if(!actions.length)return toast('No hay pistas compatibles para este elemento',true);
+  const result=commit(actions,{source:'library'});
+  if(result.ok)toast(item.name+' aplicado');
+}
+async function runLibraryItem(sectionId,itemId){
+  const section=libraryProfile?.sections.find(s=>s.id===sectionId);if(!section)return;
+  const item=section.items.find(i=>i.id===itemId);if(!item)return;
+  if(sectionId==='templates'){
+    try{const response=await fetch('/library/'+item.file,{cache:'no-store'});if(!response.ok)throw Error('No se pudo leer la plantilla');const template=await response.json();replaceProject(template,item.name+' loaded');toast(item.name+' cargado');}catch(error){toast(error.message,true);}
+    return;
+  }
+  if(sectionId==='agents'){
+    try{await navigator.clipboard.writeText(item.command);toast('Comando de '+item.name+' copiado');}catch{toast(item.command,true);}
+    return;
+  }
+  applyLibraryActions(item,sectionId==='patterns'?item.target:null);
+}
+async function loadLibrary(){
+  try{
+    const response=await fetch('/library/profile.json',{cache:'no-store'});
+    if(!response.ok)throw Error('No se pudo cargar la librería (HTTP '+response.status+')');
+    const data=await response.json();
+    if(data.schema!=='cocoloop.profile'||!Array.isArray(data.sections))throw Error('Perfil de librería inválido');
+    libraryProfile=data;libraryError='';
+  }catch(error){libraryError=error.message;console.warn('[CL Studio] Library:',error);}
+  if(currentView==='library')renderLibraryPanel();
+}
+render();heartbeat();setInterval(heartbeat,1100);syncState();loadLibrary();

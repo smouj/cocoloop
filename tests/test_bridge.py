@@ -37,7 +37,7 @@ class BridgeIntegration(unittest.TestCase):
         except error.HTTPError as e:return e.code,json.load(e)
 
     def test_01_health_and_security(self):
-        code,health=self.api('/api/health');self.assertEqual(code,200);self.assertTrue(health['ok']);self.assertEqual(health['version'],'0.2.0')
+        code,health=self.api('/api/health');self.assertEqual(code,200);self.assertTrue(health['ok']);self.assertEqual(health['version'],'0.3.0')
         code,_=self.api('/api/state');self.assertEqual(code,401)
         code,_=self.api('/api/commands','POST',{'actions':[{'type':'set_tempo','bpm':120}]});self.assertEqual(code,401)
         code,_=self.api('/api/state','POST',{'project':{}},origin='http://attacker.invalid');self.assertEqual(code,403)
