@@ -2,6 +2,10 @@
 
 Electron wrapper that starts the bundled local server, opens CL Studio in a native window and installs a desktop shortcut.
 
+## Why Electron
+
+The music engine depends on Web Audio scheduling and offline rendering. Electron ships the same Chromium build on every machine, so the scheduler, compressor and WAV encoder behave consistently. It also provides mature NSIS packaging, asar integrity and sidecar management without a Rust toolchain. Tauri/WebView2 would produce a smaller installer, but WebView2 is updated independently by Windows and could change audio/render behaviour between machines; it remains a possible future shell once the native audio engine replaces Web Audio.
+
 ## Development
 
 ```sh
