@@ -46,15 +46,15 @@ jobs:
           $installer = Get-ChildItem desktop\dist\CocoLoop-Setup-*.exe | Select-Object -First 1
           if (-not $installer) { throw "Installer not found" }
           $hash = Get-FileHash $installer.FullName -Algorithm SHA256
-          "$($hash.Hash)  $($installer.Name)" | Out-File -Encoding ascii desktop\dist\SHA256SUMS.txt
-          Get-Content desktop\dist\SHA256SUMS.txt
+          "$($hash.Hash)  $($installer.Name)" | Out-File -Encoding ascii desktop\dist\SHA256SUMS-desktop.txt
+          Get-Content desktop\dist\SHA256SUMS-desktop.txt
       - uses: actions/upload-artifact@v7
         with:
           name: cocoloop-windows-installer
           path: |
             desktop/dist/CocoLoop-Setup-*.exe
             desktop/dist/*.blockmap
-            desktop/dist/SHA256SUMS.txt
+            desktop/dist/SHA256SUMS-desktop.txt
           if-no-files-found: error
       - name: Attach installer to release
         if: startsWith(github.ref, 'refs/tags/')
@@ -63,4 +63,4 @@ jobs:
           files: |
             desktop/dist/CocoLoop-Setup-*.exe
             desktop/dist/*.blockmap
-            desktop/dist/SHA256SUMS.txt
+            desktop/dist/SHA256SUMS-desktop.txt
